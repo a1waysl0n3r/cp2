@@ -3,7 +3,7 @@
 #include <windows.h>
 #include <stdbool.h>
 
-int height = 20, width = 20;
+int height = 25, width = 25;
 int gameover, score;
 int x, y, fruitx, fruity, flag;
 int tailX[100], tailY[100];
@@ -11,7 +11,6 @@ int nTail;
 int a = 20;
 int delay = 300;
 int HighScore = 0;
-
 
 void setup() {
     gameover = 0;
@@ -21,6 +20,7 @@ void setup() {
     nTail = 0;
     score = 0;
     delay = 300;
+    a = 20;
     label1:
     fruitx = rand() % 20;
     if (fruitx == 0)
@@ -29,14 +29,14 @@ void setup() {
     fruity = rand() % 20;
     if (fruity == 0)
         goto label2;
+
 }
 
-int sleep_time(int *delay, int *a)
-{
+int sleep_time(int *delay, int *a) {
 
-    if(score > *a && *delay > 10)
+    if(score > *a && *delay > 50)
     {
-        *delay = *delay - 10;
+        *delay = *delay - 50;
         *a = *a + 20;
         return *delay;
     }
@@ -75,7 +75,7 @@ void input() {
 
 void draw() {
     system("cls");
-    int i,j; 
+    int i,j;
     for ( i = 0; i < height; i++) {
         for ( j = 0; j < width; j++) {
             if (i == 0 || i == width - 1 || j == 0 || j == height - 1)
