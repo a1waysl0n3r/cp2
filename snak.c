@@ -12,8 +12,28 @@ int a = 20;
 int delay = 300;
 int HighScore = 0;
 
+
+void setup() {
+    gameover = 0;
+    x = height / 2;
+    y = width / 2;
+    flag = 0;
+    nTail = 0;
+    score = 0;
+    delay = 300;
+    label1:
+    fruitx = rand() % 20;
+    if (fruitx == 0)
+        goto label1;
+    label2:
+    fruity = rand() % 20;
+    if (fruity == 0)
+        goto label2;
+}
+
 int sleep_time(int *delay, int *a)
 {
+
     if(score > *a && *delay > 10)
     {
         *delay = *delay - 10;
@@ -24,24 +44,6 @@ int sleep_time(int *delay, int *a)
     {
         return *delay;
     }
-}
-
-
-
-void setup() {
-    gameover = 0;
-    x = height / 2;
-    y = width / 2;
-    flag = 0;
-    label1:
-    fruitx = rand() % 20;
-    if (fruitx == 0)
-        goto label1;
-    label2:
-    fruity = rand() % 20;
-    if (fruity == 0)
-        goto label2;
-    score = 0;
 }
 
 void input() {
@@ -73,8 +75,9 @@ void input() {
 
 void draw() {
     system("cls");
-    for (int i = 0; i < height; i++) {
-        for (int j = 0; j < width; j++) {
+    int i,j; 
+    for ( i = 0; i < height; i++) {
+        for ( j = 0; j < width; j++) {
             if (i == 0 || i == width - 1 || j == 0 || j == height - 1)
                 printf("#");
             else {
@@ -84,7 +87,8 @@ void draw() {
                     printf("*");
                 else {
                     bool printTail = false;
-                    for (int k = 0; k < nTail; k++)
+                    int k;
+                    for (k = 0; k < nTail; k++)
                     {
                         if (tailX[k] == i && tailY[k] == j)
                         {
@@ -100,7 +104,7 @@ void draw() {
         printf("\n");
     }
     printf("Score = %d", score);
-    printf("High score: %d", highscore);
+    printf("\nHigh score: %d", HighScore);
     printf("\n");
     printf("Press X to quit the game");
 }
@@ -112,7 +116,8 @@ void logic() {
     int prev2X, prev2Y;
     tailX[0] = x;
     tailY[0] = y;
-    for (int i = 1; i < nTail; i++) {
+    int i;
+    for (i = 1; i < nTail; i++) {
         prev2X = tailX[i];
         prev2Y = tailY[i];
         tailX[i] = prevX;
@@ -142,21 +147,14 @@ void logic() {
     {
         printf("\nGame over: Hit the boundary\n");
         gameover = 1;
-        score, nTail = 0;
-        delay = 300;
-
     }
 
-    for (int i = 0; i < nTail; i++) {
+    for ( i = 0; i < nTail; i++) {
         if (tailX[i] == x && tailY[i] == y)
         {
             printf("\nGame over: Collided with yourself\n");
-            if(HighScore < score){
-            HighScore = score;
-            }
+
             gameover = 1;
-            score, nTail = 0;
-            delay = 300;
 
         }
     }
@@ -184,7 +182,10 @@ int main() {
             draw();
             logic();
         }
-        
+        if(HighScore < score){
+            HighScore = score;
+        }
+
         printf("\nDo you want to continue (y/n) ? ");
             scanf("%c", &ch);
             while (getchar() != '\n');
