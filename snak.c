@@ -10,6 +10,7 @@ int tailX[100], tailY[100];
 int nTail;
 int a = 20;
 int delay = 300;
+int HighScore = 0;
 
 int sleep_time(int *delay, int *a)
 {
@@ -99,6 +100,7 @@ void draw() {
         printf("\n");
     }
     printf("Score = %d", score);
+    printf("High score: %d", highscore);
     printf("\n");
     printf("Press X to quit the game");
 }
@@ -149,6 +151,9 @@ void logic() {
         if (tailX[i] == x && tailY[i] == y)
         {
             printf("\nGame over: Collided with yourself\n");
+            if(HighScore < score){
+            HighScore = score;
+            }
             gameover = 1;
             score, nTail = 0;
             delay = 300;
@@ -179,6 +184,7 @@ int main() {
             draw();
             logic();
         }
+        
         printf("\nDo you want to continue (y/n) ? ");
             scanf("%c", &ch);
             while (getchar() != '\n');
